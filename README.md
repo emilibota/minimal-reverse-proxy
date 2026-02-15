@@ -25,59 +25,23 @@ Render automatically injects:
 
 - `PORT`
 
----
-
-## Caddyfile
-
-```
-:{$PORT} {
-  @site host {$SERVER_NAME}
-
-  handle @site {
-    reverse_proxy https://{$WORKER_HOST} {
-      header_up Host {$WORKER_HOST}
-    }
-  }
-
-  handle {
-    respond "Not found" 404
-  }
-}
-```
-
----
-
-## Dockerfile
-
-```
-FROM caddy:2-alpine
-COPY Caddyfile /etc/caddy/Caddyfile
-```
-
----
+--
 
 ## Deploying on Render
 
-1. Push this repository to a **public Git repository**
-2. In Render:
-   - Create a new **Web Service**
-   - Select **Docker**
-   - Connect your repository
+1. Create a new **Web Service**
+2. Select **Docker** > **Public Repository**
+3. Copy this repo's URL there
 3. Add environment variables:
    - `SERVER_NAME`
    - `WORKER_HOST`
-4. Deploy
+4. Click on Deploy
+5. Get the url generated in render.com
+6. Set it in your domain's DNS records, in a HTTPS record.
 
 Render handles HTTPS at the edge.  
 Caddy runs HTTP internally on `$PORT`.
 
----
-
-## DNS Requirement
-
-Your domain’s **A record** must point to your Render service hostname.
-
----
 
 ## Optional: Path Prefix Proxying
 
