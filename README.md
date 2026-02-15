@@ -18,7 +18,6 @@ Designed for deployment on Render as a Docker Web Service.
 
 Set these in Render:
 
-- `SERVER_NAME` → your public hostname (e.g. `proxy.yourdomain.com`)
 - `WORKER_HOST` → your Worker domain (e.g. `myworker.username.workers.dev`)
 
 Render automatically injects:
@@ -36,8 +35,8 @@ Render automatically injects:
    - `SERVER_NAME`
    - `WORKER_HOST`
 4. Click on Deploy
-5. Get the url generated in render.com
-6. Set it in your domain's DNS records, in a HTTPS record.
+5. Set a custom domain in **Settings**
+6. Set it in your domain's DNS records, in a CNAME record.
 
 Render handles HTTPS at the edge.  
 Caddy runs HTTP internally on `$PORT`.
