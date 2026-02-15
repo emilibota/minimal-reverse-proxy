@@ -1,0 +1,13 @@
+:{$PORT} {
+  @site host {$SERVER_NAME}
+
+  handle @site {
+    reverse_proxy https://{$WORKER_HOST} {
+      header_up Host {$WORKER_HOST}
+    }
+  }
+
+  handle {
+    respond "Not found" 404
+  }
+}
