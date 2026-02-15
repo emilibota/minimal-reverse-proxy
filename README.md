@@ -1,7 +1,20 @@
-# Caddy Reverse Proxy → Cloudflare Worker (Render-ready)
+# Caddy Reverse Proxy → Cloudflare Worker
 
-Minimal Docker image running Caddy as a reverse proxy in front of a Cloudflare Worker.  
+
+Minimal Docker image running Caddy as a reverse proxy in front of a Cloudflare Worker.
 Designed for deployment on Render as a Docker Web Service.
+
+---
+
+## Why?
+I have webpages to care for. Spanish webpages. 
+At first, it was only some spanish ISPs that blocked Cloudflare IPs, nowadays is every. spanish. ISP.
+
+I don't have words to express how much I despise this people and how greedy they are.
+
+So I build this as a free (or cheap) workaround for people like me that can't have the wepage down on a weekend and don't have money to spare in infrastructure.
+
+Now it only needs to point the principal CNAME to the proxy.webpage.com following the [hayahora.futbol](https://hayahora.futbol/) webpage (thanks guys!) and everything will run smoothly (theoretically).
 
 ---
 
@@ -24,37 +37,17 @@ Render automatically injects:
 
 - `PORT`
 
---
+---
 
 ## Deploying on Render
 
 1. Create a new **Web Service**
 2. Select **Docker** > **Public Repository**
 3. Copy this repo's URL there
-3. Add environment variables:
-   - `SERVER_NAME`
-   - `WORKER_HOST`
+3. Add environment variable `WORKER_HOST`
 4. Click on Deploy
 5. Set a custom domain in **Settings**
 6. Set it in your domain's DNS records, in a CNAME record.
-
-Render handles HTTPS at the edge.  
-Caddy runs HTTP internally on `$PORT`.
-
-
-## Optional: Path Prefix Proxying
-
-Example: Forward only `/api/*` and strip `/api` before sending to the Worker:
-
-```
-:{$PORT} {
-  handle_path /api/* {
-    reverse_proxy https://{$WORKER_HOST} {
-      header_up Host {$WORKER_HOST}
-    }
-  }
-}
-```
 
 ---
 
